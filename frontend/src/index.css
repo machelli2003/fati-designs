@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-ivory text-ink font-sans antialiased; }
+  h1, h2, h3, h4 { @apply font-serif font-medium tracking-tight; }
+  ::selection { background: #D8C9B8; }
+  :focus-visible { outline: 2px solid #79614E; outline-offset: 3px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-7xl px-5 sm:px-8; }
+  .eyebrow { @apply text-[11px] uppercase tracking-widest2 text-brown; }
+  .btn { @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 text-[12px] uppercase tracking-[0.2em] transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed; }
+  .btn-dark { @apply bg-ink text-ivory hover:bg-brown; }
+  .btn-line { @apply border border-ink text-ink hover:bg-ink hover:text-ivory; }
+  .btn-light { @apply border border-ivory/70 text-ivory hover:bg-ivory hover:text-ink; }
+  .field { @apply w-full border border-beige bg-white px-4 py-3 text-sm outline-none transition focus:border-brown; }
+  .label { @apply mb-1.5 block text-xs font-medium uppercase tracking-wider text-brown; }
+}
