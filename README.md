@@ -48,7 +48,7 @@ There is **no public signup and no default account**. The only way to create an 
 Run it again with the same email to reset the password.
 
 ## 5. Deploy
-1. In Render, create a **Blueprint** from this repository using the root `render.yaml`. It creates the FastAPI web service and the Vite static site.
+1. In Render, create a **Blueprint** from this repository using the root `render.yaml`. It creates the FastAPI web service and the Vite static site. The root `.python-version` pins the backend to the latest Python 3.11 patch release instead of Render's newer default.
 2. Set `MONGODB_URI` and all three `CLOUDINARY_*` values for the API service. Render generates `JWT_SECRET`; `MONGODB_DB` is already set.
 3. Set the static site's `VITE_API_URL` to the API service's full HTTPS URL (no trailing slash). Set the API's `CORS_ORIGINS` to the static site's exact origin (scheme included, no trailing slash). If you add a custom domain later, update `CORS_ORIGINS` to include it and redeploy the API.
 4. The static-site rewrite in `render.yaml` supports React Router paths. The API health check is `/api/health`.
