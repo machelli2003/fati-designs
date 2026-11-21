@@ -48,10 +48,12 @@ There is **no public signup and no default account**. The only way to create an 
 Run it again with the same email to reset the password.
 
 ## 5. Deploy
-1. **Backend on Render:** create a Blueprint from this repository using `backend/render.yaml`. Set `MONGODB_URI`, `CORS_ORIGINS`, and all three `CLOUDINARY_*` variables in the Render dashboard. Use the exact frontend origin in `CORS_ORIGINS` (scheme included, no trailing slash). Render generates `JWT_SECRET`. The health check is `/api/health`.
-2. **Frontend on Vercel:** import the repository, set the project root to `frontend`, and set `VITE_API_URL` to the deployed Render API URL (for example, `https://your-service.onrender.com`, without a trailing slash). The frontend must be rebuilt after changing this variable. `frontend/vercel.json` handles client-side routes.
-3. After choosing the public domain, replace `YOUR-DOMAIN.com` in `frontend/public/robots.txt` and `frontend/public/sitemap.xml`.
-4. Verify `/api/health`, the public pages, the contact form, and `/admin/login` on the deployed site. Never put backend secrets in a `VITE_*` variable.
+1. In Render, create a **Blueprint** from this repository using the root `render.yaml`. It creates the FastAPI web service and the Vite static site.
+2. Set `MONGODB_URI` and all three `CLOUDINARY_*` values for the API service. Render generates `JWT_SECRET`; `MONGODB_DB` is already set.
+3. Set the static site's `VITE_API_URL` to the API service's full HTTPS URL (no trailing slash). Set the API's `CORS_ORIGINS` to the static site's exact origin (scheme included, no trailing slash). If you add a custom domain later, update `CORS_ORIGINS` to include it and redeploy the API.
+4. The static-site rewrite in `render.yaml` supports React Router paths. The API health check is `/api/health`.
+5. After choosing a custom domain, replace `YOUR-DOMAIN.com` in `frontend/public/robots.txt` and `frontend/public/sitemap.xml`.
+6. Verify `/api/health`, the public pages, the contact form, and `/admin/login` on the deployed site. Never put backend secrets in a `VITE_*` variable.
 
 Render's free instances may sleep when idle, so the first request can take ~30 seconds.
 
