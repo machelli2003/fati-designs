@@ -2,7 +2,7 @@ import { ArrowLeft, MessageCircle, ZoomIn } from "lucide-react";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Lightbox from "@/components/Lightbox";
-import { ErrorState, Img, Loading, SampleTag } from "@/components/ui";
+import { ErrorState, Img, Loading } from "@/components/ui";
 import { useSettings } from "@/context/SettingsContext";
 import { fmtDate, whatsappLink } from "@/lib/media";
 import { useSeo } from "@/lib/seo";
@@ -30,7 +30,6 @@ export default function DesignDetail() {
             <button key={i} onClick={() => setLb(i)} aria-label={`Enlarge photo ${i + 1}`}
               className={`group relative overflow-hidden bg-cream ${i === 0 ? "aspect-[3/4] sm:col-span-2 sm:aspect-[4/5]" : "aspect-[3/4]"}`}>
               <Img src={img.url} alt={`${d.title} photo ${i + 1}`} width={i === 0 ? 1200 : 700} eager={i === 0} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-              {i === 0 && d.is_sample && <SampleTag />}
               <span className="absolute bottom-3 right-3 bg-ivory/90 p-2 opacity-0 transition group-hover:opacity-100"><ZoomIn className="h-4 w-4" /></span>
             </button>
           ))}

@@ -3,18 +3,18 @@ export interface Design {
   id: string; title: string; description: string; category: string;
   collection_id: string | null; collection_name?: string | null;
   images: ImageRef[]; featured: boolean; status: "draft" | "published";
-  is_sample?: boolean; created_at: string;
+  created_at: string;
 }
 export interface Collection {
   id: string; name: string; description: string; cover_url?: string | null;
   cover_public_id?: string | null; status: "draft" | "published";
-  design_count?: number; is_sample?: boolean; created_at: string;
+  design_count?: number; created_at: string;
 }
 export interface Video {
   id: string; title: string; description: string; category: "runway" | "process";
   source: "upload" | "embed"; video_url: string; video_public_id?: string | null;
   thumbnail_url?: string | null; thumbnail_public_id?: string | null;
-  status: "draft" | "published"; is_sample?: boolean; created_at: string;
+  status: "draft" | "published"; created_at: string;
 }
 export interface Inquiry {
   id: string; name: string; contact: string; service: string; message: string;
@@ -29,7 +29,7 @@ export interface SiteSettings {
 export interface Paged<T> { items: T[]; total: number; page: number; pages: number }
 export interface Stats {
   designs: number; collections: number; videos: number; inquiries: number;
-  new_inquiries: number; sample_items: number; storage_configured: boolean;
+  new_inquiries: number; storage_configured: boolean;
   recent_designs: Design[]; recent_inquiries: Inquiry[];
 }
 export const CATEGORIES = [

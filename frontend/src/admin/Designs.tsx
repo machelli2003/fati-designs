@@ -29,7 +29,7 @@ export default function Designs() {
               <div className="min-w-0 flex-1">
                 <p className="truncate font-medium">{d.title}</p>
                 <p className="truncate text-xs text-ink/60">{d.category} · {d.images.length} photo{d.images.length === 1 ? "" : "s"} · {fmtDate(d.created_at)}</p>
-                <div className="mt-1.5 flex flex-wrap gap-1.5"><StatusBadge s={d.status} />{d.featured && <Badge tone="blue">featured</Badge>}{d.is_sample && <Badge tone="amber">sample</Badge>}</div>
+                <div className="mt-1.5 flex flex-wrap gap-1.5"><StatusBadge s={d.status} />{d.featured && <Badge tone="blue">featured</Badge>}</div>
               </div>
               <Link to={`/admin/designs/${d.id}`} aria-label={`Edit ${d.title}`} className="p-3 hover:bg-cream"><Pencil className="h-4 w-4" /></Link>
               <button onClick={() => del(d)} aria-label={`Delete ${d.title}`} className="p-3 text-red-700 hover:bg-red-50"><Trash2 className="h-4 w-4" /></button>

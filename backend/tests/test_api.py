@@ -19,12 +19,11 @@ def test_full_flow():
         db = get_db()
         db.users.insert_one({"email": "a@b.com", "password_hash": hash_password("password123!"), "role": "admin", "created_at": now()})
 
-        # public: seeded sample content
-        r = c.get("/api/designs"); assert r.status_code == 200 and r.json()["total"] == 8
-        assert c.get("/api/designs?category=Dresses").json()["total"] == 2
-        assert c.get("/api/designs?limit=3").json()["pages"] == 3
-        assert len(c.get("/api/collections").json()) == 1
-        assert len(c.get("/api/videos?category=runway").json()) == 1
+        # public: starts without sample or placeholder content
+        r = c.get("/api/designs"); assert r.status_code == 200 and r.json()["total"] == 0
+        assert c.get("/api/designs?category=Dresses").json()["total"] == 0
+        assert c.get("/api/collections").json() == []
+        assert c.get("/api/videos?category=runway").json() == []
         assert c.get("/api/settings").json()["brand_name"] == "FATI DESIGNS"
 
         # admin is protected
@@ -35,7 +34,7 @@ def test_full_flow():
         t = c.post("/api/auth/login", json={"email": "a@b.com", "password": "password123!"}).json()["token"]
         h = {"Authorization": f"Bearer {t}"}
         assert c.get("/api/auth/me", headers=h).json()["email"] == "a@b.com"
-        assert c.get("/api/admin/stats", headers=h).json()["designs"] == 8
+        assert c.get("/api/admin/stats", headers=h).json()["designs"] == 0
 
         # signing
         s = c.post("/api/admin/upload/sign", json={"resource_type": "image", "folder": "designs"}, headers=h).json()
@@ -83,5 +82,5 @@ def test_full_flow():
         st = c.get("/api/admin/settings", headers=h).json(); st["tagline"] = "New tag"
         assert c.put("/api/admin/settings", json=st, headers=h).status_code == 200
         assert c.get("/api/settings").json()["tagline"] == "New tag"
-        assert c.delete("/api/admin/sample-content", headers=h).json()["designs"] == 8
+        assert c.delete("/api/admin/sample-content", headers=h).json()["designs"] == 0
         assert c.get("/api/designs").json()["total"] == 0

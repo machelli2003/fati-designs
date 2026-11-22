@@ -47,7 +47,7 @@ def list_designs(
     page: int = Query(1, ge=1),
     limit: int = Query(12, ge=1, le=48),
 ):
-    q: dict = {"status": "published"}
+    q: dict = {"status": "published", "is_sample": {"$ne": True}}
     if category:
         q["category"] = category
     if collection:
@@ -68,7 +68,11 @@ def list_designs(
 
 @router.get("/designs/{design_id}")
 def get_design(design_id: str):
-    d = get_db().designs.find_one({"_id": oid(design_id), "status": "published"})
+    d = get_db().designs.find_one({
+        "_id": oid(design_id),
+        "status": "published",
+        "is_sample": {"$ne": True},
+    })
     if not d:
         raise HTTPException(404, "Design not found")
     return _design_out(d, _collection_names())
@@ -78,12 +82,16 @@ def get_design(design_id: str):
 def list_collections():
     db = get_db()
     out = []
-    for c in db.collections.find({"status": "published"}).sort("created_at", -1):
+    for c in db.collections.find({"status": "published", "is_sample": {"$ne": True}}).sort("created_at", -1):
         item = ser(c)
         cid = str(c["_id"])
-        item["design_count"] = db.designs.count_documents({"collection_id": cid, "status": "published"})
+        item["design_count"] = db.designs.count_documents({
+            "collection_id": cid,
+            "status": "published",
+            "is_sample": {"$ne": True},
+        })
         if not item.get("cover_url"):
-            first = db.designs.find_one({"collection_id": cid, "status": "published"})
+            first = db.designs.find_one({"collection_id": cid, "status": "published", "is_sample": {"$ne": True}})
             if first and first.get("images"):
                 item["cover_url"] = first["images"][0]["url"]
         out.append(item)
@@ -92,7 +100,7 @@ def list_collections():
 
 @router.get("/videos")
 def list_videos(category: str | None = None):
-    q: dict = {"status": "published"}
+    q: dict = {"status": "published", "is_sample": {"$ne": True}}
     if category in config.VIDEO_CATEGORIES:
         q["category"] = category
     return [ser(v) for v in get_db().videos.find(q).sort("created_at", -1)]

@@ -63,7 +63,6 @@ Render's free instances may sleep when idle, so the first request can take ~30 s
 - **Videos**: upload MP4 or paste YouTube/Vimeo link; thumbnail is auto-generated if not provided.
 - **Inquiries**: new / contacted / completed, delete.
 - **Settings**: brand, hero, bio, profile photo, WhatsApp, Instagram, email, phone, location. Changes appear instantly.
-- **Sample content**: Settings > "Remove all sample content" once real work is in. (Set `SEED_SAMPLE=0` to stop auto-seeding on an empty database.)
 
 ## Security notes
 - Passwords hashed with bcrypt; JWT sessions (12h by default); login limited to 8 attempts / 10 min / IP.

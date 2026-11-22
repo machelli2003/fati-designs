@@ -5,7 +5,7 @@ import { Empty, ErrorState, Loading } from "@/components/ui";
 import { admin } from "@/lib/api";
 import { fmtDate, optimize, parseEmbed, videoThumb } from "@/lib/media";
 import type { Video } from "@/lib/types";
-import { Badge, Field, Msg, PageHead, SingleUploader, StatusBadge } from "./parts";
+import { Field, Msg, PageHead, SingleUploader, StatusBadge } from "./parts";
 import { useAdminFetch } from "./useAdminFetch";
 
 export function VideosList() {
@@ -28,7 +28,7 @@ export function VideosList() {
                 {t ? <img src={optimize(t, 240)} alt="" className="h-16 w-28 shrink-0 object-cover" /> : <div className="h-16 w-28 shrink-0 bg-cream" />}
                 <div className="min-w-0 flex-1"><p className="truncate font-medium">{v.title}</p>
                   <p className="text-xs text-ink/60">{v.category === "runway" ? "Runway" : "Creative process"} · {v.source === "upload" ? "MP4" : "Link"} · {fmtDate(v.created_at)}</p>
-                  <div className="mt-1 flex gap-1.5"><StatusBadge s={v.status} />{v.is_sample && <Badge tone="amber">sample</Badge>}</div></div>
+                  <div className="mt-1 flex gap-1.5"><StatusBadge s={v.status} /></div></div>
                 <Link to={`/admin/videos/${v.id}`} aria-label={`Edit ${v.title}`} className="p-3 hover:bg-cream"><Pencil className="h-4 w-4" /></Link>
                 <button onClick={() => del(v)} aria-label={`Delete ${v.title}`} className="p-3 text-red-700 hover:bg-red-50"><Trash2 className="h-4 w-4" /></button>
               </li>

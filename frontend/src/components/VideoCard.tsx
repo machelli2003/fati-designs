@@ -2,7 +2,7 @@ import { Play } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { Video } from "@/lib/types";
 import { fmtDate, parseEmbed, videoThumb } from "@/lib/media";
-import { Img, SampleTag } from "./ui";
+import { Img } from "./ui";
 import { X } from "lucide-react";
 
 export function VideoModal({ v, onClose }: { v: Video; onClose: () => void }) {
@@ -25,7 +25,7 @@ export function VideoModal({ v, onClose }: { v: Video; onClose: () => void }) {
             <iframe src={embed.src.replace("autoplay=1", "autoplay=0")} title={v.title} className="h-full w-full" allow="fullscreen; picture-in-picture" allowFullScreen />
           ) : (
             <div className="flex h-full items-center justify-center p-6 text-center text-sm text-ivory/70">
-              This is a sample video card. Add a real video from the dashboard.
+              This video is not available.
             </div>
           )}
         </div>
@@ -43,7 +43,6 @@ export default function VideoCard({ v }: { v: Video }) {
       <button onClick={() => setOpen(true)} className="group block w-full text-left" aria-label={`Play ${v.title}`}>
         <div className="relative aspect-video overflow-hidden bg-cream">
           <Img src={videoThumb(v)} alt={v.title} sizes="(min-width:1024px) 33vw, 100vw" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-          {v.is_sample && <SampleTag />}
           <div className="absolute inset-0 flex items-center justify-center bg-ink/20 transition group-hover:bg-ink/35">
             <span className="flex h-14 w-14 items-center justify-center rounded-full bg-ivory/95 text-ink transition group-hover:scale-110"><Play className="ml-0.5 h-5 w-5 fill-current" /></span>
           </div>

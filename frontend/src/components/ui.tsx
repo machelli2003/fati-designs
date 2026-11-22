@@ -31,9 +31,6 @@ export const Empty = ({ title, hint, action }: { title: string; hint?: string; a
     {action}
   </div>
 );
-export const SampleTag = () => (
-  <span className="absolute left-3 top-3 bg-ivory/90 px-2 py-1 text-[9px] uppercase tracking-widest text-brown">Sample</span>
-);
 export function SectionTitle({ eyebrow, title, link }: { eyebrow: string; title: string; link?: ReactNode }) {
   return (
     <div className="mb-10 flex flex-wrap items-end justify-between gap-4">

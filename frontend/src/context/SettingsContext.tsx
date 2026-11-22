@@ -4,8 +4,8 @@ import type { SiteSettings } from "@/lib/types";
 
 const FALLBACK: SiteSettings = {
   brand_name: "FATI DESIGNS", tagline: "Designed with Passion. Crafted with Precision.",
-  hero_heading: "Where Creativity Meets Craftsmanship.", hero_description: "", hero_image_url: "/placeholders/hero.svg",
-  about_heading: "Hello, I'm Fati.", about_bio: "", profile_image_url: "/placeholders/portrait.svg",
+  hero_heading: "", hero_description: "", hero_image_url: null,
+  about_heading: "", about_bio: "", profile_image_url: null,
   whatsapp_number: "", instagram_url: "", email: "", phone: "", location: "",
 };
 interface Ctx { settings: SiteSettings; loading: boolean; error: boolean; reload: () => void }

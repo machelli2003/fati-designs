@@ -45,9 +45,6 @@ def stats():
         "videos": db.videos.count_documents({}),
         "inquiries": db.inquiries.count_documents({}),
         "new_inquiries": db.inquiries.count_documents({"status": "new"}),
-        "sample_items": db.designs.count_documents({"is_sample": True})
-        + db.collections.count_documents({"is_sample": True})
-        + db.videos.count_documents({"is_sample": True}),
         "recent_designs": [ser(d) for d in db.designs.find().sort("created_at", -1).limit(5)],
         "recent_inquiries": [ser(i) for i in db.inquiries.find().sort("created_at", -1).limit(5)],
         "storage_configured": media.configured(),
@@ -272,7 +269,3 @@ def remove_sample_content():
     return seed.remove_sample()
 
 
-@router.post("/sample-content")
-def add_sample_content():
-    seed.seed_sample(force=True)
-    return {"ok": True}

@@ -2,13 +2,12 @@ import { useEffect, useState, type FormEvent } from "react";
 import { ErrorState, Loading } from "@/components/ui";
 import { useSettings } from "@/context/SettingsContext";
 import { admin } from "@/lib/api";
-import type { SiteSettings, Stats } from "@/lib/types";
+import type { SiteSettings } from "@/lib/types";
 import { Field, Msg, PageHead, SingleUploader } from "./parts";
 import { useAdminFetch } from "./useAdminFetch";
 
 export default function Settings() {
   const { data, error, loading, reload } = useAdminFetch<SiteSettings>("/settings");
-  const stats = useAdminFetch<Stats>("/stats");
   const pub = useSettings();
   const [f, setF] = useState<SiteSettings | null>(null);
   const [msg, setMsg] = useState<{ k: "ok" | "error"; t: string } | null>(null);
@@ -22,11 +21,6 @@ export default function Settings() {
     e.preventDefault(); setBusy(true); setMsg(null);
     try { await admin.put("/settings", f); pub.reload(); setMsg({ k: "ok", t: "Saved. Your website is updated." }); window.scrollTo(0, 0); }
     catch (x) { setMsg({ k: "error", t: (x as Error).message }); window.scrollTo(0, 0); } finally { setBusy(false); }
-  };
-  const sample = async (remove: boolean) => {
-    if (remove && !confirm("Remove all sample designs, collections and videos? Your own content is not touched.")) return;
-    try { remove ? await admin.del("/sample-content") : await admin.post("/sample-content"); stats.reload(); setMsg({ k: "ok", t: remove ? "Sample content removed." : "Sample content added." }); }
-    catch (x) { setMsg({ k: "error", t: (x as Error).message }); }
   };
   const input = (k: keyof SiteSettings, label: string, hint?: string, type = "text") => (
     <Field label={label} hint={hint}><input type={type} className="field" value={(f[k] as string) || ""} onChange={up(k)} /></Field>
@@ -55,14 +49,6 @@ export default function Settings() {
       </section>
       <div className="mt-8 border-t border-beige pt-6"><button className="btn btn-dark" disabled={busy}>{busy ? "Saving..." : "Save changes"}</button></div>
 
-      <section className="mt-14 border border-beige p-6">
-        <h2 className="text-2xl">Sample content</h2>
-        <p className="mt-2 text-sm text-ink/70">Placeholder designs, collection and videos are shown so the site isn't empty. {stats.data ? `Currently ${stats.data.sample_items} sample item(s).` : ""} Remove them once you've uploaded your own work.</p>
-        <div className="mt-4 flex flex-wrap gap-3">
-          <button type="button" onClick={() => sample(true)} className="btn btn-line !border-red-700 !text-red-700 hover:!bg-red-700 hover:!text-white">Remove all sample content</button>
-          <button type="button" onClick={() => sample(false)} className="btn btn-line">Add sample content back</button>
-        </div>
-      </section>
     </form>
   );
 }

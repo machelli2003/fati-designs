@@ -28,8 +28,8 @@ def startup():
     get_db()
     ensure_indexes()
     seed.ensure_settings()
-    if config.SEED_SAMPLE:
-        seed.seed_sample()
+    # Permanently remove legacy placeholder content instead of reseeding it.
+    seed.remove_sample()
 
 
 app.include_router(public_router)

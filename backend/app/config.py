@@ -21,8 +21,6 @@ CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME", "")
 CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY", "")
 CLOUDINARY_API_SECRET = os.getenv("CLOUDINARY_API_SECRET", "")
 
-SEED_SAMPLE = os.getenv("SEED_SAMPLE", "1") == "1"
-
 CATEGORIES = [
     "Dresses",
     "Traditional Wear",

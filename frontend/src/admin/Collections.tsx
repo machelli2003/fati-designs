@@ -4,7 +4,7 @@ import { Empty, ErrorState, Loading } from "@/components/ui";
 import { admin } from "@/lib/api";
 import { optimize } from "@/lib/media";
 import type { Collection, Design } from "@/lib/types";
-import { Badge, Field, Msg, PageHead, SingleUploader, StatusBadge } from "./parts";
+import { Field, Msg, PageHead, SingleUploader, StatusBadge } from "./parts";
 import { useAdminFetch } from "./useAdminFetch";
 
 const blank = { name: "", description: "", cover_url: null as string | null, cover_public_id: null as string | null, status: "published" as "draft" | "published" };
@@ -83,7 +83,7 @@ export default function Collections() {
               {c.cover_url ? <img src={optimize(c.cover_url, 160)} alt="" className="h-16 w-14 object-cover" /> : <div className="h-16 w-14 bg-cream" />}
               <div className="min-w-0 flex-1"><p className="truncate font-medium">{c.name}</p>
                 <p className="text-xs text-ink/60">{c.design_count} design{c.design_count === 1 ? "" : "s"}</p>
-                <div className="mt-1 flex gap-1.5"><StatusBadge s={c.status} />{c.is_sample && <Badge tone="amber">sample</Badge>}</div></div>
+                <div className="mt-1 flex gap-1.5"><StatusBadge s={c.status} /></div></div>
               <button onClick={() => open(c)} aria-label={`Edit ${c.name}`} className="p-3 hover:bg-cream"><Pencil className="h-4 w-4" /></button>
               <button onClick={() => del(c)} aria-label={`Delete ${c.name}`} className="p-3 text-red-700 hover:bg-red-50"><Trash2 className="h-4 w-4" /></button>
             </li>
